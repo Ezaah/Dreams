@@ -7,9 +7,9 @@ Para eso usa un sistema programable de arduino con multiples sensores para recib
 ### Estructura de archivos
 ```bash
 Dreams
-├─ Arduino
-│  └─ Folders
 ├─ API
+│  └─ Folders
+├─ Arduino
 │  └─ Folders
 ├─ Frontend
 │  └─ Folders
@@ -18,20 +18,7 @@ Dreams
 
 ### TODO List:
 + Arduino
-  + Comprar y Calibrar el Sensor de Sonido
-  + Armar Prototipo
-  + Capturar datos
-  + Enviar los datos al servidor
 + API
-  + Crear base de datos
-  + Crear modelos
-  + Generar rutas
-  + Pedir credenciales
 + Frontend
   + Pagina Web
-    + Diseñar pagina
-    + Pedir credenciales
-    + Conectarse a la API
   + Aplicación Movil
-    + Considerar
- 
