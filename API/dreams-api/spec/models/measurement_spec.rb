@@ -7,5 +7,4 @@ RSpec.describe Measurement, type: :model do
   it { should validate_presence_of(:temperature) }
   it { should validate_presence_of(:humidity) }
   it { should validate_presence_of(:active) }
-  it { should validate_presence_of(:measured_at) }
 end

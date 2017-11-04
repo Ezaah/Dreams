@@ -6,6 +6,5 @@ FactoryBot.define do
     temperature { Faker::Number.between(0,100) }
     humidity { Faker::Number.between(0,100) }
     active true
-    measured_at { Faker::Date.between(1.days.ago, Date.today) }
   end
 end
