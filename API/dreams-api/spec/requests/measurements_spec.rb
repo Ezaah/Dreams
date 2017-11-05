@@ -65,7 +65,22 @@ RSpec.describe 'Measurements API', type: :request do
       end
 
       it 'returns a measurement' do
-        expect(json.size).to eq(1)
+        expect(json.size).to eq(9)
+      end
+    end
+  end
+
+  describe 'GET /users/:user_id/measurements/history?from=:from&to=:to' do
+    let(:valid_attributes) { { from: Faker::Time.between(1.days.ago, Date.today), to: Faker::Time.forward(1) } }
+    before { get "/users/#{user_id}/measurements/history", params: valid_attributes}
+
+    context 'there are measurements' do
+      it 'returns status code 200' do
+        expect(response).to have_http_status(200)
+      end
+
+      it 'returns measurements' do
+        expect(json.size).to be > 0
       end
     end
   end

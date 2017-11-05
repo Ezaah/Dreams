@@ -49,7 +49,7 @@ RSpec.describe 'Users API', type: :request do
 
   # POST /users
   describe 'POST /users' do
-    let(:valid_attributes) { { name: 'Pedrito Pablo', email: 'pedrito.pablo@email.com', password: 'pedrito', mode: 0, artefact: 12345678, active: true } }
+    let(:valid_attributes) { { name: 'Pedrito Pablo', email: 'pedrito.pablo@email.com', password: 'pedrito', artefact: 12345678 } }
 
     context 'when the request is valid' do
       before { post '/users', params: valid_attributes }
@@ -64,14 +64,14 @@ RSpec.describe 'Users API', type: :request do
     end
 
     context 'when the request is invalid' do
-      before { post '/users', params: { name: 'Manti' } }
+      before { post '/users', params: {} }
 
       it 'returns code 422' do
         expect(response).to have_http_status(422)
       end
 
       it 'returns a validation failure message' do
-        expect(response.body).to match(/Validation failed: Email can't be blank, Password digest can't be blank, Mode can't be blank, Artefact can't be blank, Active can't be blank, Password can't be blank/)
+        expect(response.body).to match(/Validation failed: Name can't be blank, Email can't be blank, Password digest can't be blank, Artefact can't be blank, Password can't be blank/)
       end
     end
   end
@@ -84,7 +84,8 @@ RSpec.describe 'Users API', type: :request do
       before { put "/users/#{user_id}", params: valid_attributes }
 
       it 'updates user' do
-        expect(response.body).to be_empty
+        updated_user = User.find(user_id)
+        expect(updated_user.mode).to eq(1)
       end
 
       it 'returns code 204' do

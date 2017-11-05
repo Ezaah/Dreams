@@ -10,7 +10,7 @@ class UsersController < ApplicationController
 
   # POST /users
   def create
-    @user = User.create!(user_params)
+    @user = User.create!(user_params.merge!(mode: 0, active: true))
     json_response(@user, :created)
   end
 
@@ -38,6 +38,6 @@ class UsersController < ApplicationController
   end
 
   def set_user
-    @user = User.find(params[:id])
+    @user = User.find_by!(id: params[:id], active: true)
   end
 end

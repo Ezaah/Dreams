@@ -7,6 +7,7 @@
     + Usuario
       + Alertas
     + Medidas
+      + Checkear Alertas
       + ~Ultima medida~
-      + Medidas desde A hasta B
+      + ~Medidas desde A hasta B~
   + Pedir credenciales

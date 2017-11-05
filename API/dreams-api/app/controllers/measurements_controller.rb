@@ -15,13 +15,21 @@ class MeasurementsController < ApplicationController
     json_response(@measurement)
   end
 
+  def history
+    @measurements = []
+    Measurement.where(created_at: (history_params[:from]..history_params[:to]), active: true).find_each do |measurement|
+      @measurements.push(measurement)
+    end
+    json_response(@measurements)
+  end
+
   def create
     @user.measurements.create!(measurement_params.merge!(active: true))
     json_response(@user, :created)
   end
 
   def update
-    @measurement.update(measurement_params)
+    @measurement.update_attribute(:active, measurement_params[:active])
     head :no_content
   end
 
@@ -33,7 +41,11 @@ class MeasurementsController < ApplicationController
   private
 
   def measurement_params
-    params.permit(:light, :sound, :temperature, :humidity, :active, :user_id, :id)
+    params.permit(:light, :sound, :temperature, :humidity, :active)
+  end
+
+  def history_params
+    params.permit(:from, :to)
   end
 
   def set_user
