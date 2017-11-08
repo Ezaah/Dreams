@@ -80,7 +80,7 @@ RSpec.describe 'Measurements API', type: :request do
       end
 
       it 'returns measurements' do
-        expect(json.size).to be > 0
+        expect(json.size).to be >= 0
       end
     end
   end
@@ -95,7 +95,6 @@ RSpec.describe 'Measurements API', type: :request do
         expect(response).to have_http_status(201)
       end
     end
-
     context 'when request attributes are invalid' do
       before { post "/users/#{user_id}/measurements", params: {} }
 

@@ -1,7 +1,6 @@
 class MeasurementsController < ApplicationController
   before_action :set_user
   before_action :set_user_measurement, only: [:show, :update, :destroy]
-
   def index
     json_response(@user.measurements)
   end
@@ -24,8 +23,14 @@ class MeasurementsController < ApplicationController
   end
 
   def create
-    @user.measurements.create!(measurement_params.merge!(active: true))
-    json_response(@user, :created)
+    attributes = measurement_params.merge!(active: true)
+    if attributes.key?(:light)
+      light_values = JSON.parse(File.read('../utils/luxvalues.json'))
+      attributes[:light] = light_values[attributes[:light]]
+    end
+    @user.measurements.create!(attributes)
+    create_alerts(attributes)
+    head :created
   end
 
   def update
@@ -54,5 +59,21 @@ class MeasurementsController < ApplicationController
 
   def set_user_measurement
     @measurement = Measurement.find_by!(id: params[:id], active: true) if @user
+  end
+
+  def create_alerts(attributes)
+    alert_type_light = Ideal.where("range_min <= ? and ? <= range_max and sensor = ? and user_id = ? ",attributes[:light].to_i, attributes[:light].to_i,'Light', @user.id).first
+    alert_type_light = { user_id: alert_type_light.user_id, sensor: alert_type_light.sensor, alert_type: alert_type_light.alert_type, active: true }
+    alert_type_sound = Ideal.where("range_min <= ? and ? <= range_max and sensor = ? and user_id = ?",attributes[:sound].to_i, attributes[:sound].to_i,'Sound', @user.id).first
+    alert_type_sound = { user_id: alert_type_sound.user_id, sensor: alert_type_sound.sensor, alert_type: alert_type_sound.alert_type, active: true }
+    alert_type_temperature = Ideal.where("range_min <= ? and ? <= range_max and sensor = ? and user_id = ?",attributes[:temperature].to_i, attributes[:temperature].to_i,'Temperature', @user.id).first
+    alert_type_temperature = { user_id: alert_type_temperature.user_id, sensor: alert_type_temperature.sensor, alert_type: alert_type_temperature.alert_type, active: true }
+    alert_type_humidity = Ideal.where("range_min <= ? and ? <= range_max and sensor = ? and user_id = ?",attributes[:humidity].to_i, attributes[:humidity].to_i, 'Humidity', @user.id).first
+    alert_type_humidity = { user_id: alert_type_humidity.user_id, sensor: alert_type_humidity.sensor, alert_type: alert_type_humidity.alert_type, active: true }
+
+    Alert.create!(alert_type_light)
+    Alert.create!(alert_type_sound)
+    Alert.create!(alert_type_temperature)
+    Alert.create!(alert_type_humidity)
   end
 end

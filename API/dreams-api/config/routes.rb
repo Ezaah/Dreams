@@ -7,5 +7,7 @@ Rails.application.routes.draw do
         get 'history'
       end
     end
+    get 'alerts'
   end
+  post '/sync' => 'api#sync'
 end
