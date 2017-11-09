@@ -9,5 +9,7 @@ Rails.application.routes.draw do
     end
     get 'alerts'
   end
-  post '/sync' => 'api#sync'
+  get '/sync' => 'api#sync'
+  post '/register' => 'users#create'
+  post '/login' => 'api#login'
 end

@@ -11,7 +11,7 @@ class UsersController < ApplicationController
 
   # POST /users
   def create
-    @user = User.create!(user_params.merge!(mode: 0, active: true))
+    @user = User.create!(user_params.merge!(name: "placeholder", mode: 0, active: true))
     create_ideals(@user.id)
     json_response(@user, :created)
   end

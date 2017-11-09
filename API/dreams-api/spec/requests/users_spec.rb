@@ -48,14 +48,15 @@ RSpec.describe 'Users API', type: :request do
   end
 
   # POST /users
-  describe 'POST /users' do
-    let(:valid_attributes) { { name: 'Pedrito Pablo', email: 'pedrito.pablo@email.com', password: 'pedrito', artefact: 12345678 } }
+  describe 'POST /register' do
+    let(:valid_attributes) { { email: 'pedrito.pablo@email.com', password: 'pedrito', artefact: 12345678 } }
 
     context 'when the request is valid' do
-      before { post '/users', params: valid_attributes }
+      before { post '/register', params: valid_attributes }
 
       it 'creates user' do
-        expect(json['name']).to eq('Pedrito Pablo')
+        p response.body
+        expect(json['email']).to eq('pedrito.pablo@email.com')
       end
 
       it 'returns code 201' do
@@ -72,14 +73,14 @@ RSpec.describe 'Users API', type: :request do
     end
 
     context 'when the request is invalid' do
-      before { post '/users', params: {} }
+      before { post '/register', params: {} }
 
       it 'returns code 422' do
         expect(response).to have_http_status(422)
       end
 
       it 'returns a validation failure message' do
-        expect(response.body).to match(/Validation failed: Name can't be blank, Email can't be blank, Password digest can't be blank, Artefact can't be blank, Password can't be blank/)
+        expect(response.body).to match(/Validation failed: Email can't be blank, Password digest can't be blank, Artefact can't be blank, Password can't be blank/)
       end
     end
   end
