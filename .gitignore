@@ -1,5 +1,5 @@
 
-# Created by https://www.gitignore.io/api/vim,ruby,linux,macos,python,windows,laravel,android,pycharm,phpstorm,jetbrains,sublimetext,androidstudio
+# Created by https://www.gitignore.io/api/vim,ruby,linux,rails,macos,python,windows,laravel,android,pycharm,phpstorm,rubymine,jetbrains,sublimetext,androidstudio
 
 ### Android ###
 # Built application files
@@ -456,11 +456,54 @@ venv.bak/
 # mypy
 .mypy_cache/
 
+### Rails ###
+*.rbc
+capybara-*.html
+.rspec
+/log
+/tmp
+/db/*.sqlite3
+/db/*.sqlite3-journal
+/public/system
+/coverage/
+/spec/tmp
+*.orig
+rerun.txt
+pickle-email-*.html
+
+# TODO Comment out this rule if you are OK with secrets being uploaded to the repo
+config/initializers/secret_token.rb
+
+# Only include if you have production secrets in this file, which is no longer a Rails default
+# config/secrets.yml
+
+# dotenv
+# TODO Comment out this rule if environment variables can be committed
+
+## Environment normalization:
+/.bundle
+/vendor/bundle
+
+# these should all be checked in to normalize the environment:
+# Gemfile.lock, .ruby-version, .ruby-gemset
+
+# unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
+.rvmrc
+
+# if using bower-rails ignore default bower_components path bower.json files
+/vendor/assets/bower_components
+*.bowerrc
+bower.json
+
+# Ignore pow environment settings
+.powenv
+
+# Ignore Byebug command history file.
+.byebug_history
+
 ### Ruby ###
 *.gem
-*.rbc
 /.config
-/coverage/
 /InstalledFiles
 /pkg/
 /spec/reports/
@@ -495,7 +538,6 @@ build-iPhoneSimulator/
 
 ## Environment normalization:
 /.bundle/
-/vendor/bundle
 /lib/bundler/man/
 
 # for a library or gem, you might want to ignore these files since the code is
@@ -505,7 +547,46 @@ build-iPhoneSimulator/
 # .ruby-gemset
 
 # unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
-.rvmrc
+
+### RubyMine ###
+# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and Webstorm
+# Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
+
+# User-specific stuff:
+
+# Sensitive or high-churn files:
+
+# Gradle:
+
+# CMake
+
+# Mongo Explorer plugin:
+
+## File-based project format:
+
+## Plugin-specific files:
+
+# IntelliJ
+
+# mpeltonen/sbt-idea plugin
+
+# JIRA plugin
+
+# Cursive Clojure plugin
+
+# Ruby plugin and RubyMine
+
+# Crashlytics plugin (for Android Studio and IntelliJ)
+
+### RubyMine Patch ###
+# Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
+
+# *.iml
+# modules.xml
+# .idea/misc.xml
+# *.ipr
+
+# Sonarlint plugin
 
 ### SublimeText ###
 # cache files for sublime text
@@ -571,4 +652,5 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.gitignore.io/api/vim,ruby,linux,macos,python,windows,laravel,android,pycharm,phpstorm,jetbrains,sublimetext,androidstudio
+# End of https://www.gitignore.io/api/vim,ruby,linux,rails,macos,python,windows,laravel,android,pycharm,phpstorm,rubymine,jetbrains,sublimetext,androidstudio
+
