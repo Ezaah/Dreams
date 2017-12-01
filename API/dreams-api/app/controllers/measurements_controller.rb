@@ -25,7 +25,7 @@ class MeasurementsController < ApplicationController
   def create
     attributes = measurement_params.merge!(active: true)
     if attributes.key?(:light)
-      light_values = JSON.parse(File.read('../utils/luxvalues.json'))
+      light_values = JSON.parse(File.read('/utils/luxvalues.json'))
       attributes[:light] = light_values[attributes[:light]]
     end
     @user.measurements.create!(attributes)
