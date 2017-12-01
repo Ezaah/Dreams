@@ -16,7 +16,7 @@ class MeasurementsController < ApplicationController
 
   def history
     @measurements = []
-    Measurement.where(created_at: (history_params[:from]..history_params[:to]), active: true).find_each do |measurement|
+    Measurement.where(created_at: (history_params[:from]..history_params[:to]), active: true, user_id: history_params[:user_id]).find_each do |measurement|
       @measurements.push(measurement)
     end
     json_response(@measurements)
@@ -25,7 +25,7 @@ class MeasurementsController < ApplicationController
   def create
     attributes = measurement_params.merge!(active: true)
     if attributes.key?(:light)
-      light_values = JSON.parse(File.read('/utils/luxvalues.json'))
+	    light_values = JSON.parse(File.read('utils/luxvalues.json'))
       attributes[:light] = light_values[attributes[:light]]
     end
     @user.measurements.create!(attributes)
@@ -50,7 +50,7 @@ class MeasurementsController < ApplicationController
   end
 
   def history_params
-    params.permit(:from, :to)
+    params.permit(:from, :to, :user_id)
   end
 
   def set_user
