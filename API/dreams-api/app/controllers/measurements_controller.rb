@@ -64,16 +64,27 @@ class MeasurementsController < ApplicationController
   def create_alerts(attributes)
     alert_type_light = Ideal.where("range_min <= ? and ? <= range_max and sensor = ? and user_id = ? ",attributes[:light].to_i, attributes[:light].to_i,'Light', @user.id).first
     alert_type_light = { user_id: alert_type_light.user_id, sensor: alert_type_light.sensor, alert_type: alert_type_light.alert_type, active: true }
+
     alert_type_sound = Ideal.where("range_min <= ? and ? <= range_max and sensor = ? and user_id = ?",attributes[:sound].to_i, attributes[:sound].to_i,'Sound', @user.id).first
     alert_type_sound = { user_id: alert_type_sound.user_id, sensor: alert_type_sound.sensor, alert_type: alert_type_sound.alert_type, active: true }
+
     alert_type_temperature = Ideal.where("range_min <= ? and ? <= range_max and sensor = ? and user_id = ?",attributes[:temperature].to_i, attributes[:temperature].to_i,'Temperature', @user.id).first
     alert_type_temperature = { user_id: alert_type_temperature.user_id, sensor: alert_type_temperature.sensor, alert_type: alert_type_temperature.alert_type, active: true }
-    alert_type_humidity = Ideal.where("range_min <= ? and ? <= range_max and sensor = ? and user_id = ?",attributes[:humidity].to_i, attributes[:humidity].to_i, 'Humidity', @user.id).first
-    alert_type_humidity = { user_id: alert_type_humidity.user_id, sensor: alert_type_humidity.sensor, alert_type: alert_type_humidity.alert_type, active: true }
 
-    Alert.create!(alert_type_light)
-    Alert.create!(alert_type_sound)
-    Alert.create!(alert_type_temperature)
-    Alert.create!(alert_type_humidity)
+    alert_type_humidity = Ideal.where("range_min <= ? and ? <= range_max and sensor = ? and user_id = ?",attributes[:humidity].to_i, attributes[:humidity].to_i, 'Humidity', @user.id).first
+    alert_type_humidity = { user_id: alert_type_humidity.user_id, sensor: alert_type_humidity.sensor, alert_type: alert_type_humidity.alert_type, active: true}
+    
+    if alert_type_light[:alert_type] != 'Green'
+      Alert.create!(alert_type_light)
+    end
+    if alert_type_sound[:alert_type] != 'Green'
+      Alert.create!(alert_type_sound)
+    end
+    if alert_type_temperature[:alert_type] != 'Green'
+      Alert.create!(alert_type_temperature)
+    end
+    if alert_type_humidity[:alert_type] != 'Green'
+      Alert.create!(alert_type_humidity)
+    end
   end
 end
