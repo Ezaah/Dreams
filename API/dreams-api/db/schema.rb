@@ -10,15 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171107224252) do
+ActiveRecord::Schema.define(version: 20171203054258) do
 
   create_table "alerts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "user_id"
-    t.string "sensor"
-    t.string "alert_type"
+    t.bigint "measurement_id"
+    t.string "light_alert"
+    t.string "sound_alert"
+    t.string "temperature_alert"
+    t.string "humidity_alert"
+    t.boolean "active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "active"
+    t.index ["measurement_id"], name: "index_alerts_on_measurement_id"
     t.index ["user_id"], name: "index_alerts_on_user_id"
   end
 
@@ -28,9 +32,9 @@ ActiveRecord::Schema.define(version: 20171107224252) do
     t.string "sensor"
     t.integer "range_min"
     t.integer "range_max"
+    t.boolean "active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "active"
     t.index ["user_id"], name: "index_ideals_on_user_id"
   end
 
@@ -50,7 +54,6 @@ ActiveRecord::Schema.define(version: 20171107224252) do
     t.string "name"
     t.string "email"
     t.string "password_digest"
-    t.integer "mode"
     t.integer "artefact"
     t.boolean "active"
     t.datetime "created_at", null: false
@@ -58,5 +61,6 @@ ActiveRecord::Schema.define(version: 20171107224252) do
   end
 
   add_foreign_key "alerts", "users"
+  add_foreign_key "alerts", "measurements"
   add_foreign_key "ideals", "users"
 end

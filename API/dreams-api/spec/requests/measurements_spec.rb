@@ -64,8 +64,8 @@ RSpec.describe 'Measurements API', type: :request do
         expect(response).to have_http_status(200)
       end
 
-      it 'returns a measurement' do
-        expect(json.size).to eq(9)
+      it 'returns a measurement with its alert' do
+        expect(json.size).to eq(2)
       end
     end
   end
@@ -86,13 +86,21 @@ RSpec.describe 'Measurements API', type: :request do
   end
 
   describe 'POST /users/:user_id/measurements' do
-    let(:valid_attributes) { { light: 200, sound: 200, temperature: 25, humidity: 35 } }
+    let(:user_post) { post "/register", params: {email: "asd@asd.com", password: "asd123", artefact: 1234567890} }
+    let(:user_post) { User.find_by(email: "asd@asd.com") }
+
+    let(:valid_attributes) { { light: 200, sound: 1, temperature: 25, humidity: 35 } }
 
     context 'when request attributes are valid' do
-      before { post "/users/#{user_id}/measurements", params: valid_attributes }
+      before { post "/users/#{user_post.id}/measurements", params: valid_attributes }
 
       it 'returns status code 201' do
         expect(response).to have_http_status(201)
+      end
+
+      it 'creates one alert' do
+        alert = Alert.find_by!(user_id: user_post.id, active: true)
+        expect(alert).not_to be_nil
       end
     end
     context 'when request attributes are invalid' do

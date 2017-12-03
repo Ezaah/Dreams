@@ -55,7 +55,6 @@ RSpec.describe 'Users API', type: :request do
       before { post '/register', params: valid_attributes }
 
       it 'creates user' do
-        p response.body
         expect(json['email']).to eq('pedrito.pablo@email.com')
       end
 
@@ -87,14 +86,14 @@ RSpec.describe 'Users API', type: :request do
 
   # PUT /users/:id
   describe 'PUT /users/:id' do
-    let(:valid_attributes) { { mode: 1 } }
+    let(:valid_attributes) { { name: "Test" } }
 
     context 'when user exists' do
       before { put "/users/#{user_id}", params: valid_attributes }
 
       it 'updates user' do
         updated_user = User.find(user_id)
-        expect(updated_user.mode).to eq(1)
+        expect(updated_user.name).to match(/Test/)
       end
 
       it 'returns code 204' do
