@@ -62,12 +62,12 @@ RSpec.describe 'Users API', type: :request do
         expect(response).to have_http_status(201)
       end
 
-      it 'creates 11 ideals (3 per sensor, 2 for sound)' do
+      it 'creates 12 ideals (3 per sensor)' do
         ideals = []
         Ideal.where(user_id: json['id'], active: true).find_each do |ideal|
           ideals.push(ideal)
         end
-        expect(ideals.size).to eq(11)
+        expect(ideals.size).to eq(12)
       end
     end
 
