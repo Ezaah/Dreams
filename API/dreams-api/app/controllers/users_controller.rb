@@ -74,9 +74,11 @@ class UsersController < ApplicationController
   end
 
   def create_sound_ideals(user_id)
-    ideal_params_sound_green = { user_id: user_id, alert_type: 'Green', sensor: 'Sound', range_min: 0, range_max: 0, active: true }
-    ideal_params_sound_red = { user_id: user_id, alert_type: 'Red', sensor: 'Sound', range_min: 1, range_max: 1, active: true }
+    ideal_params_sound_green = { user_id: user_id, alert_type: 'Green', sensor: 'Sound', range_min: 0, range_max: 20, active: true }
+    ideal_params_sound_yellow = { user_id: user_id, alert_type: 'Yellow', sensor: 'Sound', range_min: 21, range_max: 50, active: true }
+    ideal_params_sound_red = { user_id: user_id, alert_type: 'Red', sensor: 'Sound', range_min: 51, range_max: 1023, active: true }
     Ideal.create!(ideal_params_sound_green)
+    Ideal.create!(ideal_params_sound_yellow)
     Ideal.create!(ideal_params_sound_red)
   end
 
