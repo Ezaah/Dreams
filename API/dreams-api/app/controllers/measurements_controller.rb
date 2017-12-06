@@ -1,6 +1,7 @@
 class MeasurementsController < ApplicationController
   before_action :set_user
   before_action :set_user_measurement, only: [:show, :update, :destroy]
+
   def index
     json_response(@user.measurements)
   end
@@ -26,9 +27,9 @@ class MeasurementsController < ApplicationController
 
   def create
     attributes = measurement_params.merge!(active: true)
-    if attributes.key?(:light)
-	    light_values = JSON.parse(File.read('utils/luxvalues.json'))
-      attributes[:light] = light_values[attributes[:light]]
+    if attributes.key?(:light) && attributes.key?(:sound)
+      attributes[:light] = luxvalues[attributes[:light]]
+      attributes[:sound] = soundvalues[attributes[:sound]]
     end
     measurement = @user.measurements.create!(attributes)
     create_alert(measurement)
@@ -47,6 +48,14 @@ class MeasurementsController < ApplicationController
 
   private
 
+  def luxvalues
+    @@luxvalues ||= JSON.parse(File.read('utils/luxvalues.json'))
+  end
+
+  def soundvalues
+    @@soundvalues ||= JSON.parse(File.read('utils/soundvalues.json'))
+  end
+
   def measurement_params
     params.permit(:light, :sound, :temperature, :humidity, :active)
   end
@@ -64,7 +73,7 @@ class MeasurementsController < ApplicationController
   end
 
   def create_alert(measurement)
-    
+
     light_type = Ideal.where("user_id = ? AND sensor = ? AND range_min <= ? AND range_max >= ?", measurement.user_id, 'Light', measurement.light, measurement.light).pluck(:alert_type).first
     sound_type = Ideal.where("user_id = ? AND sensor = ? AND range_min <= ? AND range_max >= ?", measurement.user_id, 'Sound', measurement.sound, measurement.sound).pluck(:alert_type).first
     temperature_type = Ideal.where("user_id = ? AND sensor = ? AND range_min <= ? AND range_max >= ?", measurement.user_id, 'Temperature', measurement.temperature, measurement.temperature).pluck(:alert_type).first

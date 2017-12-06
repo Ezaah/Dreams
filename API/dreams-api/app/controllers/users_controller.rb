@@ -74,8 +74,8 @@ class UsersController < ApplicationController
   end
 
   def create_sound_ideals(user_id)
-    ideal_params_sound_green = { user_id: user_id, alert_type: 'Green', sensor: 'Sound', range_min: 0, range_max: 20, active: true }
-    ideal_params_sound_yellow = { user_id: user_id, alert_type: 'Yellow', sensor: 'Sound', range_min: 21, range_max: 50, active: true }
+    ideal_params_sound_green = { user_id: user_id, alert_type: 'Green', sensor: 'Sound', range_min: 0, range_max: 40, active: true }
+    ideal_params_sound_yellow = { user_id: user_id, alert_type: 'Yellow', sensor: 'Sound', range_min: 41, range_max: 50, active: true }
     ideal_params_sound_red = { user_id: user_id, alert_type: 'Red', sensor: 'Sound', range_min: 51, range_max: 1023, active: true }
     Ideal.create!(ideal_params_sound_green)
     Ideal.create!(ideal_params_sound_yellow)
@@ -83,8 +83,8 @@ class UsersController < ApplicationController
   end
 
   def create_temperature_ideals(user_id)
-    ideal_params_temperature_green = { user_id: user_id, alert_type: 'Green', sensor: 'Temperature', range_min: 18, range_max: 20, active: true }
-    ideal_params_temperature_yellow = { user_id: user_id, alert_type: 'Yellow', sensor: 'Temperature', range_min: 14, range_max: 24, active: true }
+    ideal_params_temperature_green = { user_id: user_id, alert_type: 'Green', sensor: 'Temperature', range_min: 16, range_max: 22, active: true }
+    ideal_params_temperature_yellow = { user_id: user_id, alert_type: 'Yellow', sensor: 'Temperature', range_min: 12, range_max: 26, active: true }
     ideal_params_temperature_red = { user_id: user_id, alert_type: 'Red', sensor: 'Temperature', range_min: 0, range_max: 60, active: true }
     Ideal.create!(ideal_params_temperature_green)
     Ideal.create!(ideal_params_temperature_yellow)
