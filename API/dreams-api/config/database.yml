@@ -50,5 +50,5 @@ test:
 production:
   <<: *default
   database: dreams-api_production
-  username: dreams-api
-  password: <%= ENV['DREAMS-API_DATABASE_PASSWORD'] %>
+  # username: dreams-api
+  # password: <%= ENV['DREAMS-API_DATABASE_PASSWORD'] %>
